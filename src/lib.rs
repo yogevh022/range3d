@@ -3,6 +3,9 @@ pub struct Range3D {
     x: isize,
     y: isize,
     z: isize,
+    min_x: isize,
+    min_y: isize,
+    min_z: isize,
     max_x: isize,
     max_y: isize,
     max_z: isize,
@@ -24,6 +27,9 @@ impl Range3D {
             x: min_x,
             y: min_y,
             z: min_z,
+            min_x,
+            min_y,
+            min_z,
             max_x,
             max_y,
             max_z,
@@ -43,10 +49,10 @@ impl Iterator for Range3D {
 
         self.z = unsafe { self.z.unchecked_add(1) };
         if self.z >= self.max_z {
-            self.z = 0;
+            self.z = self.min_z;
             self.y = unsafe { self.y.unchecked_add(1) };
             if self.y >= self.max_y {
-                self.y = 0;
+                self.y = self.min_y;
                 self.x = unsafe { self.x.unchecked_add(1) };
             }
         }
